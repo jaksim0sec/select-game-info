@@ -1,0 +1,2 @@
+# selet-game-info
+information
