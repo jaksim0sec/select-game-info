@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>정보 입력</title>
+    <style>
+        * {
+            cursor: url('https://ifh.cc/g/RxYG1P.png') 2 2, auto;
+            user-select: none;
+        }
+        body {
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: #f9f9f9;
+            font-family: 'Jua', sans-serif;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+            appearance: textfield; 
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0; 
+        }
+
+        input {
+            width: calc(100% - 20px);
+            max-width: 300px;
+            height: 30px;
+            border-radius: 10px;
+            padding: 8px;
+            border: 2px solid #EAEAEA;
+            resize: none;
+            transition: all 0.3s ease, color 1s ease;
+            margin: 10px;
+            font-size: 15px;
+        }
+
+        input:focus {
+            border: 2px solid #FFC37F;
+            border-radius: 20px;
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: inset 0px 3px 10px #FFC37F80, 0px 8px 10px rgba(0, 0, 0, 0.2);
+            background-color: white;
+            outline: none;
+        }
+
+        input:hover:not(:focus) {
+            border-color: #4C4C4C;
+        }
+
+        .input-container {
+            position: absolute;
+            bottom: 20px;
+            padding: 5px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 5px #00000050;
+            display: flex;
+            align-items: center;
+        }
+
+        button {
+            border-radius: 20px;
+            background-color: #333;
+            color: white;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border: none;
+            height: 46px;
+            width: 200px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+        
+        #information {
+            width: 90%;
+            max-width: 800px; /* 최대 너비 설정 */
+            border-radius: 10px; /* 테이블 둥근 모서리 */
+            border: 1px solid black;
+            padding: 10px;
+            min-height: 40px;
+            position: absolute;
+            top: 10px;
+            background-color: white;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 10px; /* 테이블 둥근 모서리 */
+            overflow: hidden; /* 둥근 모서리를 적용하기 위해 추가 */
+        }
+
+        tr {
+            display: flex;
+            width: 100%;
+        }
+
+        th, td {
+            flex: 1;
+            border: 1px solid #EAEAEA;
+            padding: 5px;
+            text-align: left;
+            max-width: 150px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .action-buttons {
+            display: flex; 
+            gap: 5px; 
+            width: 200px;
+        }
+
+        .action-buttons button {
+            padding: 2px;
+            margin: 2px;
+        }
+
+        .low {
+            background-color: white; 
+            color: black;
+            border: none; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            transition: all 0.3s ease;
+        }
+
+        .low:hover {
+            background-color: #EAEAEA;
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .pending {
+            color: #FA364D; /* 미수령 상태에 대한 스타일 */
+        }
+    </style>
+</head>
+<body>
+    <div id="information">
+        <table>
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>학번</th>
+                    <th>이름</th>
+                    <th>상태</th>
+                    <th>작업</th>
+                </tr>
+            </thead>
+            <tbody id="info-body"></tbody>
+        </table>
+    </div>
+    <div class="input-container">
+        <input type="number" placeholder="학번 입력">
+        <input type="text" placeholder="이름 입력">
+        <button onclick="infor()">올리기</button>
+    </div>
+
+    <script>
+        let info = [];
+        
+        function infor() {
+            var name = document.querySelector('input[type="text"]').value.trim();
+            var number = document.querySelector('input[type="number"]').value.trim();
+            var status = '미수령';
+            var infoBody = document.querySelector('#info-body');
+
+            if (name !== '' && number !== '') {
+                const index = info.findIndex(item => item[0] === number || item[1] === name);
+                if (index !== -1) {
+                    alert(`${index + 1} 번째 항목에 이미 등록된 정보가 있습니다.`);
+                } else {
+                    info.push([number, name, status]);
+                    const itemIndex = info.length;
+                    infoBody.innerHTML += `
+                        <tr>
+                            <td>${itemIndex}</td>
+                            <td>${number}</td>
+                            <td>${name}</td>
+                            <td class="pending">${status}</td>
+                            <td class="action-buttons">
+                                <button class="low" onclick="removeInfo(${itemIndex - 1})">삭제</button>
+                                <button onclick="updateStatus(${itemIndex - 1})">완료</button>
+                            </td>
+                        </tr>
+                    `;
+                }
+            } else {
+                alert("전체 정보를 올바르게 입력하세요.");
+            }
+        }
+
+        function removeInfo(index) {
+            info.splice(index, 1);
+            updateInformation();
+        }
+
+        function updateStatus(index) {
+            info[index][2] = '수령';
+            updateInformation();
+        }
+
+        function updateInformation() {
+            const infoBody = document.querySelector('#info-body');
+            infoBody.innerHTML = '';
+            info.forEach((item, index) => {
+                const statusClass = item[2] === '미수령' ? 'pending' : ''; 
+                infoBody.innerHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${item[0]}</td>
+                        <td>${item[1]}</td>
+                        <td class="${statusClass}">${item[2]}</td>
+                        <td class="action-buttons">
+                            <button class="low" onclick="removeInfo(${index})">삭제</button>
+                            <button onclick="updateStatus(${index})">완료</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+    </script>
+</body>
+</html>
