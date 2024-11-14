@@ -1,737 +1,343 @@
-<head>
-    <title>개나리워즈:MINI ► β</title>
-    <link rel="shortcut icon" href="https://ifh.cc/g/69rynC.png">
-</head>
+<!DOCTYPE html>
+<html lang="ko">
 
-<body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>정보 입력</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
+        * {
+            cursor: url('https://ifh.cc/g/RxYG1P.png') 2 2, auto;
             user-select: none;
         }
 
-        .object {
-            position: absolute;
-        }
-
-        #ingame_world {
+        body {
+            overflow: hidden;
             width: 100vw;
             height: 100vh;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            position: relative;
-            background-color: #e6e6e6;
-        }
-
-        #ingame_world_board {
-            width: auto;
-            height: auto;
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            background-color: #E2E2E2;
-        }
-
-        .tile {
-            width: 98px;
-            height: 98px;
-            margin: 1px;
-            background-color: #DCD4CB;
-            border-radius: 15px;
-            position: relative;
-            box-shadow: inset -3px -3px 5px #CBB39B99;
-            transition: all 0.3s ease, box-shadow 0.3s ease;
             display: flex;
-            align-items: center;
             justify-content: center;
-        }
-
-        .tile:hover {
-            transform: scale(1) translateY(-8px);
-            filter: brightness(0.98);
-            box-shadow: 0px 8px 10px #00000020, inset -3px -3px 5px #CBB39B99;
-        }
-
-
-        .tile-updated {
-            filter: brightness(0.95);
-            transform: scale(0.95);
-            transition: all 0.3s ease;
-        }
-
-        .tile-updated-end {
-            filter: none;
-            transform: none;
-            transition: all 0.3s ease;
-        }
-
-        .tile.edge-top {
-            margin-top: 0;
-        }
-
-        .tile.edge-left {
-            margin-left: 0;
-        }
-
-        .tile.edge-bottom {
-            margin-bottom: 0;
-        }
-
-        .tile.edge-right {
-            margin-right: 0;
-        }
-
-        .캐릭터 {
-            width: 55px;
-            /*height: 90px;*/
-            transform-origin: bottom;
-            margin-bottom: 49px;
-            transition: all 0.3s ease;
-            animation: shake 0.5s ease-in-out;
-        }
-
-        .w {
-            transition: all 0.3s ease;
-        }
-
-        @keyframes jump {
-            0% {
-                transform: translateY(0);
-            }
-
-            40% {
-                transform: translateY(-10px);
-                animation-timing-function: ease-out;
-            }
-
-            50% {
-                transform: translateY(-10px);
-            }
-
-            100% {
-                transform: translateY(0);
-                animation-timing-function: ease-in;
-            }
-
-        }
-
-        @keyframes shake {
-            0% {
-                transform: rotate(-5deg) translateY(-2px);
-            }
-
-            25% {
-                transform: rotate(10deg) translateY(2px);
-            }
-
-            75% {
-                transform: rotate(-5deg) translateY(-2px);
-            }
-
-            100% {
-                transform: rotate(0deg)translateY(0px);
-            }
-        }
-
-        @keyframes 죽음아군 {
-            0% {
-                transform: rotate(0deg) translateY(0);
-                opacity: 1;
-            }
-
-            50% {
-                transform: rotate(90deg) translateY(10);
-                opacity: 1;
-            }
-
-            100% {
-                transform: rotate(90deg) translateY(10px);
-                opacity: 0;
-            }
-        }
-
-        @keyframes 죽음적군 {
-            0% {
-                transform: rotate(0deg) translateY(0);
-                opacity: 1;
-            }
-
-            50% {
-                transform: rotate(-90deg) translateY(10);
-                opacity: 1;
-            }
-
-            100% {
-                transform: rotate(-90deg) translateY(10px);
-                opacity: 0;
-            }
-        }
-
-        .fixed-window {
-            padding: 2%;
-            position: absolute;
-            border-radius: 10px;
-            background-color: rgba(0, 0, 0, 0.5);
-            transition: all 0.3s ease;
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
-            color: #fff;
-            font-family: Arial, sans-serif;
-            font-size: 16px;
-            display: flex;
+            align-items: center;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            background-color: #f9f9f9;
+            font-family: 'Jua', sans-serif;
+            padding: 0px; margin: 0px;
         }
 
-        .fixed-window:hover {
-            transform: scale(1.05);
-            border-radius: 5px;
-            background-color: rgba(0, 0, 0, 0.7);
+        input[type="number"] {
+            -moz-appearance: textfield;
+            appearance: textfield;
         }
 
-        .fixed-score-window {
-            padding: 1%;
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input {
+            width: calc(100% - 20px);
+            max-width: 300px;
+            height: 30px;
+            border-radius: 10px;
+            padding: 8px;
+            border: 2px solid #EAEAEA;
+            resize: none;
+            transition: all 0.3s ease, color 1s ease;
+            margin: 5px;
+            font-size: 15px;
+        }
+
+        input:focus {
+            border: 2px solid #00000030;
+            border-radius: 20px;
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: inset 3px 3px 10px #00000010, 0px 8px 10px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            outline: none;
+        }
+
+        input:hover:not(:focus) {
+            border-color: #4C4C4C;
+        }
+
+        .input-container {
             position: absolute;
-            border-radius: 50px;
-            background-color: rgba(0, 0, 0, 0.5);
-            transition: all 0.3s ease;
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
-            top: 2%;
-            width: 50px;
-            height: 50px;
-            align-items: center;
-            justify-content: center;
+            bottom: 30px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            box-shadow: 2px 2px 5px #00000030;
             display: flex;
-            font-size: 30px;
-            font-weight: bold;
-            color: #fff;
+            align-items: center;
+            transition: all 0.5s ease;
         }
 
-        .button {
-            padding: 10px 20px;
-            background-color: #ff5722;
+        .input-container:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 2px 7px 5px #00000040;
+        }
+
+        button {
+            border-radius: 20px;
+            background-color: #333;
             color: white;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
             border: none;
-            border-radius: 5px;
+            height: 46px;
+            width: 200px;
+            font-size: 16px;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            font-size: 14px;
         }
 
-        .button:hover {
-            background-color: #e64a19;
-            transform: scale(1.05);
+        button:hover {
+            background-color: #555;
+            transform: translateY(-2px) scale(1.02);
         }
 
-        .particle {
+        button:active {
+            transform: scale(0.95);
+        }
+
+        #information {
+            width: 90%;
+            max-width: 800px;
+            border: none;
+            border-radius: 10px;
+            padding: 10px;
+            min-height: 40px;
             position: absolute;
-            border-radius: 5px;
-            pointer-events: none;
-            opacity: 1;
-            transition: opacity 0.8s ease;
-            width: 5px;
-            height: 5px;
-            background-color: rgba(255, 255, 255, 0.8);
-            animation: explosion 1s
-                /*cubic-bezier(0.68, -0.55, 0.27, 1.55);*/
+            top: 10px;
+            background-color: white;
+            box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        @keyframes explosion {
-            0% {
-                transform: translate(0, 0) scale(1) rotate(0deg);
-                opacity: 1;
-            }
-
-            50% {
-                transform: translate(var(--offsetX), var(--offsetY)) scale(1.2) rotate(180deg);
-                opacity: 0.7;
-            }
-
-            100% {
-                transform: translate(calc(var(--offsetX) * 1.5), calc(var(--offsetY) * 1.5)) scale(0.5) rotate(360deg);
-                opacity: 0;
-            }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 10px;
+            overflow: hidden;
         }
 
-        @keyframes 침입성공{
-            0%{
-                filter: brightness(1.1) contrast(1.1);
-            }
-
-            50%{filter: brightness(1.5) contrast(1.1); transform: translateY(-5px);}
-
-            100%{filter: brightness(1) contrast(1); transform: translateY(0px); opacity: 0;}
+        tr {
+            display: flex;
+            width: 100%;
         }
-        .damageShow {
+
+        th,
+        td {
+            flex: 1;
+            border: 1px solid #EAEAEA;
+            padding: 5px;
+            text-align: left;
+            max-width: 150px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        th {
+            background-color: #EAEAEA;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+            width: 200px;
+        }
+
+        .action-buttons button {
+            padding: 2px;
+            margin: 2px;
+        }
+
+        .low {
+            background-color: white;
+            color: black;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .low:hover {
+            background-color: #EAEAEA;
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .pending {
+            color: #FA364D;
+        }
+
+        #window {
             position: absolute;
-            z-index: -1;
-            color: red;
+            z-index: 0;
+            width: 340px;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 0px 5px #00000030;
+            background-color: white;
+            display: flexbox;
+            justify-content: center;
+            justify-items: center;
+            align-items: center;
+            align-content: center;
+            transition: height 0.5s ease;
         }
+
+        .window-holder {
+            position: absolute;
+            z-index: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #00000080;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #close{transition:all 0.5s ease; display: none;}
+        #window-cont{width: 300px;}
+
+        .highlight{font-weight: bold;}
     </style>
+</head>
 
-    <div id="ingame_world" class="object">
-        <div id="ingame_world_board" class="object"></div>
-        <div id="ingame_world_menu">
-            <div class="fixed-window" id="status" style="bottom: 2%; left: 1%; min-width: 25%; min-height: 20%;">
-                <button
-                    onclick="오브젝트관리([{x: 2, y: 2, 고유이름: `개나리용사${counter}`, 타입: 'cha', 종족: '개나리폭탄병', 팀: '적군'}]); counter ++;오브젝트관리([{x: 2, y: 4, 고유이름: `개나리용사${counter}`, 타입: 'chaw', 종족: '개나리용사', 팀: '적군'}]); counter ++;오브젝트관리([{x: 11, y: 3, 고유이름: `개나리용사${counter}`, 타입: 'chaw', 종족: '개나리용사', 팀: '아군'}]); counter ++;오브젝트관리([{x: 10, y: 3, 고유이름: `개나리용사${counter}`, 타입: 'chaw', 종족: '개나리용사', 팀: '아군'}]); counter ++;">디버그생성</button>
-                <button onclick="행동계산(게임현황.캐릭터, '모두');">디버그</button>
-            </div>
-            <div class="fixed-score-window" id="enemy-status" style="left: 1%;border-top-right-radius: 10px;">
-                0
-            </div>
-            <div class="fixed-score-window" id="my-status" style="right: 1%;border-bottom-left-radius: 10px;">
-                0
-            </div>
-        </div>
+<body>
+    <div id="information">
+        <table>
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>학번</th>
+                    <th>이름</th>
+                    <th>상태</th>
+                    <th>작업</th>
+                </tr>
+            </thead>
+            <tbody id="info-body"></tbody>
+        </table>
+    </div>
+    <div class="input-container">
+        <input type="number" placeholder="학번 입력">
+        <input type="text" placeholder="이름 입력">
+        <span style="width: 20px;"></span>
+        <button onclick="infor()">올리기</button>
     </div>
 
     <script>
 
-        let counter = 11;
-        //데이터 
-        const 캐릭터이미지URL =
-        {
-            개나리용사: {cha: {아군: `https://ifh.cc/g/Zp3tjP.png`, 적군: 'https://ifh.cc/g/G22rfc.png'}, w: 'https://ifh.cc/g/HjCVzp.png'},
-            테스트: {아군: ``, 적군: ''},
-            적군기지: ``,
-            아군기지: ``,
-            개나리폭탄병: {아군: `https://ifh.cc/g/ZlTzJF.png`, 적군: 'https://ifh.cc/g/sKYtLq.png'}
-
-        }
-        const 캐릭터특징설정 = {개나리용사: {체력: 4, 공격력: 1}, 테스트: {체력: 3, 공격력: 2}, 적군기지: {체력: 3, 공격력: 2}, 아군기지: {체력: 3, 공격력: 2}, 개나리폭탄병: {체력: 1, 공격력: 5}, }
-        // 선언
-
-
-        //초기object 정의형식 = [x , y , 고유이름 , 타입, 종족, 팀, 체력]
-        //후기object 정의형식 = 고유이름 : {고유이름, 타입, 종족, 팀 , 체력 , x, y}
-        let 게임현황 = {
-            맵크기: [12, 5], object:
-                [{x: 1, y: 3, 고유이름: '적군기지', 타입: 'obj', 종족: '적군기지', 팀: null},
-                {x: 12, y: 3, 고유이름: '아군기지', 타입: 'obj', 종족: '아군기지', 팀: null},
-                {x: 11, y: 2, 고유이름: '개나리용사1', 타입: 'chaw', 종족: '개나리용사', 팀: '아군'},
-                {x: 11, y: 3, 고유이름: '개나리용사2', 타입: 'chaw', 종족: '개나리용사', 팀: '아군'},
-                {x: 11, y: 4, 고유이름: '개나리용사3', 타입: 'chaw', 종족: '개나리용사', 팀: '아군'},
-                {x: 2, y: 3, 고유이름: '개나리용사4', 타입: 'chaw', 종족: '개나리용사', 팀: '적군'},
-                {x: 2, y: 4, 고유이름: '개나리용사5', 타입: 'chaw', 종족: '개나리용사', 팀: '적군'},
-                {x: 2, y: 5, 고유이름: '개나리용사6', 타입: 'chaw', 종족: '개나리용사', 팀: '적군'},
-                {x: 2, y: 2, 고유이름: '개나리용사7', 타입: 'chaw', 종족: '개나리용사', 팀: '적군'},
-                {x: 2, y: 1, 고유이름: '개나리용사8', 타입: 'chaw', 종족: '개나리용사', 팀: '적군'},
-                {x: 11, y: 5, 고유이름: '개나리용사9', 타입: 'chaw', 종족: '개나리용사', 팀: '아군'},
-                {x: 11, y: 1, 고유이름: '개나리용사10', 타입: 'chaw', 종족: '개나리용사', 팀: '아군'},
-                ],
-            board: [], 캐릭터: [], 뎀판: []
-        };
-        let SYsetting = {eff: 3};
-        let SYmouse = {x: 0, y: 0};
-        let SYboardDrag = {
-            isDragging: false,
-            startX: 0,
-            startY: 0,
-            initialX: 0,
-            initialY: 0
-        };
-
-        // 정의함수
-        function HTML(name) {return document.querySelector(name);}
-
-        // 기본함수  
-        document.addEventListener('mousemove', (event) => {
-            SYmouse.x = event.clientX;
-            SYmouse.y = event.clientY;
-            //보드판 드래그
-            if (SYboardDrag.isDragging) {
-                const dx = event.clientX - SYboardDrag.startX;
-                const dy = event.clientY - SYboardDrag.startY;
-                const board = HTML("#ingame_world_board");
-                board.style.left = (SYboardDrag.initialX + dx) + 'px';
-                board.style.top = (SYboardDrag.initialY + dy) + 'px';
-            }
-        });
-
-        document.addEventListener('mousedown', (event) => {
-            //보드판 드래그
-            SYboardDrag.isDragging = true;
-            SYboardDrag.startX = event.clientX;
-            SYboardDrag.startY = event.clientY;
-            const board = HTML("#ingame_world_board");
-            SYboardDrag.initialX = parseInt(board.style.left || 0);
-            SYboardDrag.initialY = parseInt(board.style.top || 0);
-        });
-
-        document.addEventListener('mouseup', () => {
-            SYboardDrag.isDragging = false;
-        });
-
-        // 인게임 함수
-        function 폭발(x, y) {
-            const colors = ['#ff4500', '#ff8c00', '#ffd700', '#ffa500', '#ff6347'];
-            const numParticles = 20;
-            const explosionRadius = 150;
-
-            const fireworkContainer = document.createElement('div');
-            fireworkContainer.style.position = 'absolute';
-            fireworkContainer.style.top = 0;
-            fireworkContainer.style.left = 0;
-            document.body.appendChild(fireworkContainer);
-
-            for (let i = 0; i < numParticles; i++) {
-                const particle = document.createElement('div');
-                const size = Math.random() * 10 + 5;
-                const color = colors[Math.floor(Math.random() * colors.length)];
-
-                const angle = Math.random() * 2 * Math.PI;
-                const distance = Math.random() * explosionRadius;
-                const offsetX = distance * Math.cos(angle);
-                const offsetY = distance * Math.sin(angle);
-
-                particle.className = 'particle';
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                particle.style.backgroundColor = color;
-                particle.style.left = `${x - size / 2}px`;
-                particle.style.top = `${y - size / 2}px`;
-                particle.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
-                particle.style.setProperty('--offsetX', `${offsetX}px`);
-                particle.style.setProperty('--offsetY', `${offsetY}px`);
-                particle.style.animation = 'explosion 1s forwards';
-
-                fireworkContainer.appendChild(particle);
-
-                particle.addEventListener('animationend', () => {
-                    particle.remove();
-                    if (fireworkContainer.children.length === 0) {
-                        fireworkContainer.remove();
-                    }
-                });
-            }
+        function HTML(name) {
+            return document.querySelector(name);
         }
 
-        //console.log(게임현황)
-        function 보드판생성(w, h) {
-            const board = HTML("#ingame_world_board");
-            board.innerHTML = "";
-            const boardWidth = w * 100 - 2;
-            const boardHeight = h * 100 - 2;
-            const initialLeft = Math.floor((window.innerWidth - boardWidth) / 2);
-            const initialTop = Math.floor((window.innerHeight - boardHeight) / 2);
-            board.style.left = `${initialLeft}px`;
-            board.style.top = `${initialTop}px`;
-            for (let hh = 0; hh < h; hh++) {
-                const row = document.createElement("div");
-                row.style.display = "flex";
-                row.style.width = `${boardWidth}px`;
-                for (let ww = 0; ww < w; ww++) {
-                    const tile = document.createElement("div");
-                    tile.className = "tile";
-                    tile.id = `tile_${ww + 1}_${hh + 1}`;
-                    if (hh === 0) tile.classList.add("edge-top");
-                    if (ww === 0) tile.classList.add("edge-left");
-                    if (hh === h - 1) tile.classList.add("edge-bottom");
-                    if (ww === w - 1) tile.classList.add("edge-right");
-                    게임현황.board[hh * w + ww + 1] = "";
-                    게임현황.뎀판[hh * w + ww + 1] = ['', 0];
-                    if ((hh + ww) % 2 === 0) {
-                        tile.style.backgroundColor = "#F0EBE6";
-                    }
+        async function textEffect(name, content, speed) {
+            for (let textNum = 0; textNum < content.length; textNum++) {
+                HTML(name).innerHTML = HTML(name).innerHTML.replace('●', '') + content[textNum] + '●';
+                if (content[textNum] !== ' ') {await new Promise(resolve => setTimeout(resolve, speed));}
+            }
+            HTML(name).innerHTML = HTML(name).innerHTML.replace('●', '');
+        }
 
-                    row.appendChild(tile);
+        let info = [];
+
+        function infor() {
+            var name = document.querySelector('input[type="text"]').value.trim();
+            var number = document.querySelector('input[type="number"]').value.trim();
+            var status = '미수령';
+            var infoBody = document.querySelector('#info-body');
+
+            if (name !== '' && number !== '') {
+                const index = info.findIndex(item => item[0] === number || item[1] === name);
+                if (index !== -1) {
+                    windowAlert(`
+                    ${name} (${number}) 라는 정보는 ${index + 1} 번째 항목에 이미 등록되어 있습니다.
+                    다시 한번 확인하여 주시기 바랍니다.
+                    `);
+                } else {
+                    info.push([number, name, status]);
+                    const itemIndex = info.length;
+                    infoBody.innerHTML += `
+                        <tr>
+                            <td id="${itemIndex}-index">${itemIndex}</td>
+                            <td id="${itemIndex}-number">${number}</td>
+                            <td id="${itemIndex}-name">${name}</td>
+                            <td class="pending">${status}</td>
+                            <td class="action-buttons">
+                                <button class="low" onclick="removeInfo(${itemIndex - 1})">삭제</button>
+                                <button onclick="updateStatus(${itemIndex - 1})">완료</button>
+                            </td>
+                        </tr>
+                    `;
+                    textEffect(`#${itemIndex}-number`, number, 50);
+                    textEffect(`#${itemIndex}-name`, name, 50);
                 }
-                board.appendChild(row);
-            }
-            //console.log(게임현황.board);
-        }
-
-
-        async function 오브젝트관리(list) {
-            //console.log(list);
-
-            for (let i = 0; i < list.length; i++) {
-                const 대상타일 = HTML(`#tile_${list[i].x}_${list[i].y}`);
-                //console.log(list[i]);
-                //console.log(list[i].html);
-                //if (list[i].html){console.log('고라니')}
-
-                //console.log(list[i].x)
-                //console.log(`#tile_${list[i].x}_${list[i].y}`)
-                let 대상타일요소 = '';
-                const 설정요소 = list[i];
-                if (!설정요소.체력) {설정요소.체력 = 캐릭터특징설정[설정요소.종족]}
-                // 수동 html 수정
-                if ('html' in 설정요소) {
-                    대상타일.innerHTML = 설정요소.html;
-                }
-                else { // 자동 html 생성
-                    //console.log(캐릭터이미지URL[설정요소.종족] + '/' + 설정요소.종족)
-                    //console.log(설정요소.고유이름 +'/'+설정요소.팀)
-                    //console.log(설정요소.고유이름 + '/' + 설정요소.팀)
-                    if (설정요소.타입 === 'obj') {
-                        대상타일요소 = `<img src="${캐릭터이미지URL[설정요소.종족]}" id="${설정요소.고유이름}" class="object" alt="${설정요소.고유이름}">`;
-                    }
-                    else if (설정요소.타입 === 'cha') {
-                        대상타일요소 = `
-                            <img src="${캐릭터이미지URL[설정요소.종족][설정요소.팀]}" id="${설정요소.고유이름}" class="캐릭터" alt="${설정요소.팀}">
-                            <div style="position:absolute;bottom:10px;color:${(설정요소.팀 == '적군') ? '#5F2308' : '#1D1E6A'}" id = "체력바_${설정요소.고유이름}">${"◆".repeat(설정요소.체력)}</div>
-                        `;
-                    }
-                    else if (설정요소.타입 === 'chaw') {
-                        if (설정요소.팀 === "아군") {
-                            //console.log(설정요소.고유이름 + '/' + 설정요소.팀)
-                            대상타일요소 = `
-                            <img src="${캐릭터이미지URL[설정요소.종족].cha[설정요소.팀]}" id="${설정요소.고유이름}" class="캐릭터" alt="${설정요소.팀}" style = "position:absolute;">
-                            <div style="position:absolute;bottom:10px;color:${(설정요소.팀 == '적군') ? '#5F2308' : '#1D1E6A'}" id = "체력바_${설정요소.고유이름}">${"◆".repeat(설정요소.체력)}</div>
-                            <img src="${캐릭터이미지URL[설정요소.종족].w}" style = "position:absolute;left:5px;width:30px;bottom:35px;transform:rotate(-45deg);" id="w_${설정요소.고유이름}" class = "w"/>
-                        `;
-                        }
-                        else {
-                            대상타일요소 = `
-                            <img src="${캐릭터이미지URL[설정요소.종족].cha[설정요소.팀]}" id="${설정요소.고유이름}" class="캐릭터" alt="${설정요소.팀}" style = "position:absolute;">
-                                <div style="position:absolute;bottom:10px;color:${(설정요소.팀 == '적군') ? '#5F2308' : '#1D1E6A'}" id = "체력바_${설정요소.고유이름}">${"◆".repeat(설정요소.체력)}</div>
-                                <img src="${캐릭터이미지URL[설정요소.종족].w}" style = "position:absolute;right:5px;width:30px;bottom:35px;transform:rotate(45deg) scaleX(-1);" id="w_${설정요소.고유이름}" class = "w"/>
-                            `;
-                        }
-                    };
-                    HTML(`#tile_${list[i].x}_${list[i].y}`).innerHTML = 대상타일요소;
-                    //console.log(설정요소.고유이름)
-                    // 후기 object 정의 형식: [고유이름, 타입, 종족, 팀, 체력, x, y]
-                    //console.log('오브젝트관리 항목 ' + Object.keys(게임현황.캐릭터).length)
-                    let j = 1;
-                    for (j = 1; j - 1 < Object.keys(게임현황.캐릭터).length; j++) {
-                        //console.log(설정요소.고유이름 + 'J:' + j);
-                        if (게임현황.캐릭터[Object.keys(게임현황.캐릭터)[j - 1]].고유이름 === 설정요소.고유이름) {
-                            break;
-                        }
-                    }
-                    //console.log(게임현황.캐릭터 +'/' + 설정요소.고유이름)
-                    //j > Object.keys(게임현황.캐릭터).length
-                    if (j > Object.keys(게임현황.캐릭터).length) {
-                        //console.log('새로운 항목 추가됨' + 설정요소.고유이름)
-                        게임현황.캐릭터[설정요소.고유이름] = {
-                            고유이름: 설정요소.고유이름,
-                            타입: 설정요소.타입,
-                            종족: 설정요소.종족,
-                            팀: 설정요소.팀,
-                            체력: 캐릭터특징설정[설정요소.종족].체력,
-                            x: 설정요소.x,
-                            y: 설정요소.y
-                        };
-                    }
-                    else {
-                        //console.log('원래 항목 수정됨' + 설정요소.고유이름)
-                        게임현황.캐릭터[설정요소.고유이름].x = 설정요소.x;
-                        게임현황.캐릭터[설정요소.고유이름].y = 설정요소.y;
-                    }
-                }
-                //console.log(`${설정요소.x} , ${설정요소.y} 의 값이 ${대상타일.innerHTML}`)
-                게임현황.board[설정요소.x + (설정요소.y - 1) * 게임현황.맵크기[0]] = 대상타일.innerHTML;
-                //console.log('보드판현황' + 게임현황.board[설정요소.x + (설정요소.y - 1) * 게임현황.맵크기[0]])
-
-                // 타일 업데이트 효과
-                //console.log(대상타일.innerHTML)
-                대상타일.classList.add("tile-updated");
-                setTimeout(() => {
-                    대상타일.classList.remove("tile-updated");
-                    대상타일.classList.add("tile-updated-end");
-                    setTimeout(() => {
-                        대상타일.classList.remove("tile-updated-end");
-                    }, 300);
-                }, 300);
-            }
-            //console.log('▶오브젝트관리 끝')
-        }
-
-
-        function 주변계산(x, y, 방향) {
-            if (방향 === 'left') {return [x - 1, y];}
-            else if (방향 === 'right') {return [x + 1, y];}
-            else if (방향 === 'down') {return [x, y + 1];}
-            else if (방향 === 'up') {return [x, y - 1];}
-            else if (방향 === '+') {return [[x - 1, y], [x + 1, y], [x, y + 1], [x, y - 1]];}
-            else if (방향 === '*') {return [[x - 1, y + 1], [x + 1, y - 1], [x + 1, y + 1], [x - 1, y - 1]];}
-        }
-
-        function 오브젝트이동(대상, 방향) {
-            const 원래위치 = {x: 대상.x, y: 대상.y}
-            const 이동위치 = 주변계산(대상.x, 대상.y, 방향);
-            if (이동위치 && !(대상.팀 == '아군' && 대상.x == 1) && !(대상.팀 == '적군' && 대상.x == 12)) {
-                오브젝트관리([{x: 이동위치[0], y: 이동위치[1], 고유이름: 대상.고유이름, 타입: 대상.타입, 종족: 대상.종족, 팀: 대상.팀, 체력: 대상.체력}]);
-                오브젝트관리([{x: 원래위치.x, y: 원래위치.y, html: ''}])
-            }
-            else {console.log(대상.고유이름 + '이 잘못된 위치로 이동을 시도하고 있습니다.')}
-        }
-
-
-        async function 행동계산(대상, 팀) {
-            if (팀 == '모두') {
-                //console.log("이전");
-                for (var i = 0; i < Object.keys(대상).length; i++) {
-                    const 설정요소 = 대상[Object.keys(대상)[i]];
-                    //console.log(설정요소.x + '/' + 설정요소.y + '/' + 설정요소.고유이름)
-                    if (설정요소.타입 !== 'obj' && !(설정요소.y == 1 && 설정요소.x == 1 && 설정요소.팀 == '아군')) {
-                        if (설정요소.팀 == '아군') {
-                            if (게임현황.board[설정요소.x - 1 + (설정요소.y - 1) * 게임현황.맵크기[0]] == '') {
-                                if (설정요소.y > 1 && 설정요소.x !== 1 &&
-                                    게임현황.board[설정요소.x - 1 + (설정요소.y - 2) * 게임현황.맵크기[0]] !== '' &&
-                                    !(게임현황.board[설정요소.x - 1 + (설정요소.y - 2) * 게임현황.맵크기[0]].includes(설정요소.팀)) &&
-                                    게임현황.board[설정요소.x + (설정요소.y - 2) * 게임현황.맵크기[0]] === '') {
-                                    오브젝트이동(설정요소, 'up');
-                                } else if (설정요소.y < 게임현황.맵크기[1] && 설정요소.x !== 1 &&
-                                    게임현황.board[설정요소.x - 1 + 설정요소.y * 게임현황.맵크기[0]] !== '' &&
-                                    !(게임현황.board[설정요소.x - 1 + 설정요소.y * 게임현황.맵크기[0]].includes(설정요소.팀)) &&
-                                    게임현황.board[설정요소.x + 설정요소.y * 게임현황.맵크기[0]] === '') {
-                                    오브젝트이동(설정요소, 'down');
-                                } else if (설정요소.y < 게임현황.맵크기[1] && 설정요소.x > 2 &&
-                                    게임현황.board[설정요소.x - 2 + 설정요소.y * 게임현황.맵크기[0]] !== '' &&
-                                    !(게임현황.board[설정요소.x - 2 + 설정요소.y * 게임현황.맵크기[0]].includes(설정요소.팀)) &&
-                                    게임현황.board[설정요소.x + 설정요소.y * 게임현황.맵크기[0]] === '') {
-                                    오브젝트이동(설정요소, 'down');
-                                } else if (설정요소.y > 1 && 설정요소.x > 2 &&
-                                    게임현황.board[설정요소.x - 2 + (설정요소.y - 2) * 게임현황.맵크기[0]] !== '' &&
-                                    !(게임현황.board[설정요소.x - 2 + (설정요소.y - 2) * 게임현황.맵크기[0]].includes(설정요소.팀)) &&
-                                    게임현황.board[설정요소.x + (설정요소.y - 2) * 게임현황.맵크기[0]] === '') {
-                                    오브젝트이동(설정요소, 'up');
-
-                                } else {
-                                    오브젝트이동(설정요소, 'left');
-                                    if(설정요소.x === 1)
-                                    {
-                                        //점수획득시스템
-                                        게임현황.뎀판[설정요소.x + (설정요소.y - 1) * 게임현황.맵크기[0]] = ['신', -1000];
-                                    }
-                                }
-
-                            } else {
-                                if (!(게임현황.board[설정요소.x - 1 + (설정요소.y - 1) * 게임현황.맵크기[0]]).includes(설정요소.팀)) {
-                                    if (게임현황.board[설정요소.x - 1 + (설정요소.y - 1) * 게임현황.맵크기[0]].includes('기지')) {
-                                        //점수획득시스템
-                                        HTML(`#${설정요소.고유이름}`).style.animation = `침입성공 0.5s ease-in`;
-                                        게임현황.뎀판[설정요소.x + (설정요소.y - 1) * 게임현황.맵크기[0]] = ['신', -1000];
-                                    }
-                                    HTML(`#${설정요소.고유이름}`).style.animation = 'jump 0.2s ease-in-out';
-                                    if (설정요소.타입 == 'chaw') {
-                                        HTML(`#w_${설정요소.고유이름}`).style.transform = 'rotate(-130deg)';
-                                    }
-                                    게임현황.뎀판[설정요소.x - 1 + (설정요소.y - 1) * 게임현황.맵크기[0]] = [설정요소.팀, -1 * (캐릭터특징설정[설정요소.종족].공격력)];
-                                    setTimeout(() => {
-                                        if (HTML(`#${설정요소.고유이름}`)) {
-                                            HTML(`#${설정요소.고유이름}`).style.animation = '';
-                                            if (설정요소.타입 == 'chaw') {
-                                                HTML(`#w_${설정요소.고유이름}`).style.transform = 'rotate(-45deg)';
-                                            }
-                                        }
-                                    }, 500);
-                                }
-                                else {
-                                    if (게임현황.board[설정요소.x + (설정요소.y - 2) * 게임현황.맵크기[0]] == '' && 설정요소.y !== 1) {
-                                        오브젝트이동(설정요소, 'up');
-                                    }
-                                    else if (게임현황.board[설정요소.x + (설정요소.y) * 게임현황.맵크기[0]] == '' && 설정요소.y !== 게임현황.맵크기[1]) {
-                                        오브젝트이동(설정요소, 'down');
-                                    }
-                                }
-                            }
-                        }
-                        else {
-                            if (설정요소.x < 12 && 게임현황.board[설정요소.x + 1 + (설정요소.y - 1) * 게임현황.맵크기[0]] == '') {
-                                오브젝트이동(설정요소, 'right');
-                                if(설정요소.x === 12)
-                                {
-                                    //점수획득시스템
-                                    게임현황.뎀판[설정요소.x + (설정요소.y - 1) * 게임현황.맵크기[0]] = ['신', -1000];
-                                }
-                            }
-                            else {
-                                if (!(게임현황.board[설정요소.x - 1 + (설정요소.y - 1) * 게임현황.맵크기[0]]).includes(설정요소.팀)) {
-                                    if (게임현황.board[설정요소.x - 1 + (설정요소.y - 1) * 게임현황.맵크기[0]].includes('기지')) {
-                                        //점수획득시스템
-                                        HTML(`#${설정요소.고유이름}`).style.animation = `침입성공 0.5s ease-in`;
-                                        게임현황.뎀판[설정요소.x + (설정요소.y - 1) * 게임현황.맵크기[0]] = ['신', -1000];
-                                    }
-                                    HTML(`#${설정요소.고유이름}`).style.animation = 'jump 0.5s ease-in-out';
-                                    if (설정요소.타입 == 'chaw') {
-                                        HTML(`#w_${설정요소.고유이름}`).style.transform = 'rotate(130deg) scaleX(-1)';
-                                    }
-                                    게임현황.뎀판[설정요소.x + 1 + (설정요소.y - 1) * 게임현황.맵크기[0]] = [설정요소.팀, -1 * (캐릭터특징설정[설정요소.종족].공격력)];
-                                    setTimeout(() => {
-                                        if (HTML(`#${설정요소.고유이름}`)) {
-                                            HTML(`#${설정요소.고유이름}`).style.animation = '';
-                                            if (설정요소.타입 == 'chaw') {
-                                                HTML(`#w_${설정요소.고유이름}`).style.transform = 'rotate(45deg) scaleX(-1)';
-                                            }
-                                        }
-                                    }, 500);
-                                }
-                                else {
-                                    if (게임현황.board[설정요소.x + (설정요소.y - 2) * 게임현황.맵크기[0]] == '' && 설정요소.y !== 1) {
-                                        오브젝트이동(설정요소, 'up');
-                                    }
-                                    else if (게임현황.board[설정요소.x + (설정요소.y) * 게임현황.맵크기[0]] == '' && 설정요소.y !== 게임현황.맵크기[1]) {
-                                        오브젝트이동(설정요소, 'down');
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                for (var j = 0; j < Object.keys(대상).length; j++) {
-                    const 설정요소 = 대상[Object.keys(대상)[j]];
-                    //console.log(설정요소)
-                    if (설정요소.타입 !== "obj") {
-                        //console.log(JSON.stringify(게임현황.캐릭터[설정요소.고유이름]) + '▶'+JSON.stringify(설정요소));
-                        //console.log(설정요소.고유이름 +'/'+ 게임현황.뎀판[설정요소.x + (설정요소.y - 1) * 게임현황.맵크기[0]])
-                        if (게임현황.뎀판[설정요소.x + (설정요소.y - 1) * 게임현황.맵크기[0]][1] !== 0) {
-                            if (!(게임현황.뎀판[설정요소.x + (설정요소.y - 1) * 게임현황.맵크기[0]][0] === 설정요소.팀)) {
-                                게임현황.캐릭터[설정요소.고유이름].체력 += 게임현황.뎀판[설정요소.x + (설정요소.y - 1) * 게임현황.맵크기[0]][1];
-                                //HTML(`#tile_${설정요소.x}_${설정요소.y}`).innerHTML += `<div class = "damageShow">게임현황.뎀판[설정요소.x + (설정요소.y - 1) * 게임현황.맵크기[0]][1]</div>`;
-                            }
-                            else if ((게임현황.뎀판[설정요소.x + (설정요소.y - 1) * 게임현황.맵크기[0]][0] === '신')) {
-                                게임현황.캐릭터[설정요소.고유이름].체력 += 게임현황.뎀판[설정요소.x + (설정요소.y - 1) * 게임현황.맵크기[0]][1];
-                            }
-                            if (게임현황.캐릭터[설정요소.고유이름].체력 < 0) {게임현황.캐릭터[설정요소.고유이름].체력 = 0; 설정요소.체력 = 0;}
-                            HTML(`#체력바_${설정요소.고유이름}`).innerHTML = "◆".repeat(설정요소.체력);
-                            게임현황.뎀판[설정요소.x + (설정요소.y - 1) * 게임현황.맵크기[0]] = ['', 0];
-                            //console.log(설정요소.고유이름 + '..' + 설정요소.체력)
-                            if (설정요소.체력 === 0) {
-                                delete 게임현황.캐릭터[설정요소.고유이름];
-                                alert(HTML(`#${설정요소.고유이름}`).style.animation);
-                                if(설정요소.x === 12 || 설정요소.x === 1)
-                                {
-                                    HTML(`#${설정요소.고유이름}`).style.animation = '침입성공 0.5s ease-in-out';
-                                }
-                                else if(!(HTML(`#${설정요소.고유이름}`).style.animation.includes('침입성공'))){
-                                HTML(`#${설정요소.고유이름}`).style.animation = '';
-                                HTML(`#${설정요소.고유이름}`).style.animation = `죽음${설정요소.팀} 0.5s ease-in`;}
-                                console.log('죽음 / ' + JSON.stringify(게임현황.캐릭터['개나리용사2']))
-                                if (설정요소.종족 == '개나리폭탄병') {폭발(HTML(`#${설정요소.고유이름}`).getBoundingClientRect().left, HTML(`#${설정요소.고유이름}`).getBoundingClientRect().top)}
-                                if (설정요소.타입 == 'chaw') {
-                                    HTML(`#w_${설정요소.고유이름}`).style.opacity = '0';
-                                }
-                                setTimeout(() => {
-                                    HTML(`#tile_${설정요소.x}_${설정요소.y}`).innerHTML = '';
-                                    게임현황.board[설정요소.x + (설정요소.y - 1) * 게임현황.맵크기[0]] = '';
-                                }, 490);
-                                j--;
-                            }
-
-                        }
-                    }
-                }
-                //console.log("완료");
+            } else {
+                windowAlert("필요한 정보가 모두 입력되지 않았습니다. 전체 정보를 올바르게 입력하세요.");
             }
         }
 
+        function removeInfo(index) {
+            info.splice(index, 1);
+            updateInformation();
+        }
 
-        // 인게임
-        async function 게임초기설정() {
-            보드판생성(게임현황.맵크기[0], 게임현황.맵크기[1]);
-            오브젝트관리(게임현황.object);
-            const 게임진행반복 = setInterval(() => {
-                행동계산(게임현황.캐릭터, '모두');
-            }, 800);
+        function updateStatus(index) {
+            info[index][2] = '수령';
+            updateInformation();
+        }
 
-        };
-        게임초기설정();
+        function updateInformation() {
+            const infoBody = document.querySelector('#info-body');
+            infoBody.innerHTML = '';
+            info.forEach((item, index) => {
+                const statusClass = item[2] === '미수령' ? 'pending' : '';
+                infoBody.innerHTML += `
+                    <tr>
+                        <td id="${index + 1}-index">${index + 1}</td>
+                        <td id="${index + 1}-number">${item[0]}</td>
+                        <td id="${index + 1}-name">${item[1]}</td>
+                        <td class="${statusClass}">${item[2]}</td>
+                        <td class="action-buttons">
+                            <button class="low" onclick="removeInfo(${index})">삭제</button>
+                            <button onclick="updateStatus(${index})">완료</button>
+                        </td>
+                    </tr>
+                `;
+                textEffect(`#${index + 1}-number`, item[0], 50);
+                textEffect(`#${index + 1}-name`, item[1], 50);
+            });
+        }
+
+        async function windowAlert(content) {
+            HTML('body').innerHTML +=
+                `
+                <div class = "window-holder">
+                <div id = "window">
+                <center>
+                <div style = "font-size:18px;font-weight:bold">경고</div>
+                <div style = "height:20px;"></div>
+                <div id = "window-cont"></div>
+                <div style = "height:20px;"></div>
+                <button onclick="HTML('.window-holder').remove();" id="close">확인</button>
+                </center>
+                </div>
+                </div>
+                `
+            await textEffect('#window-cont', content, 30);
+            HTML('#close').style.opacity = 0;
+            HTML('#close').style.display = 'block';
+            await new Promise(resolve => setTimeout(resolve, 10))
+            HTML('#close').style.opacity = 1;
+
+        }
     </script>
 </body>
+
+</html>
