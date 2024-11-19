@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html lang="ko">
-
-<head>
+<html lang="ko"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>정보 입력</title>
@@ -74,7 +71,7 @@
 
         .input-container:hover {
             transform: translateY(-5px) scale(1.05);
-            box-shadow: 2px 7px 5px #00000040;
+            box-shadow: 2px 7px 8px #00000050;
         }
 
         button {
@@ -82,7 +79,7 @@
             background-color: #333;
             color: white;
             transition: all 0.3s ease;
-            padding: 8px 16px;
+            padding: 8px 18px;
             border: none;
             height: 46px;
             width: 200px;
@@ -176,168 +173,291 @@
         }
 
         #window {
-            position: absolute;
-            z-index: 0;
-            width: 340px;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0px 0px 5px #00000030;
-            background-color: white;
-            display: flexbox;
-            justify-content: center;
-            justify-items: center;
-            align-items: center;
-            align-content: center;
-            transition: height 0.5s ease;
-        }
+              position: absolute;
+              z-index: 0;
+              width: 340px;
+              border-radius: 15px;
+              padding: 20px;
+              box-shadow: 0px 0px 5px #00000030;
+              background-color: white;
+              display: flexbox;
+              justify-content: center;
+              justify-items: center;
+              align-items: center;
+              align-content: center;
+              transition: height 0.5s ease;
+              background-color: #00000060;
+              color: #FFFFFFCC;
+          }
 
-        .window-holder {
-            position: absolute;
-            z-index: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: #00000080;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+          .window-holder {
+              position: absolute;
+              z-index: 0;
+              width: 100vw;
+              height: 100vh;
+              background-color: #00000080;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+          }
 
-        #close{transition:all 0.5s ease; display: none;}
-        #window-cont{width: 300px;}
+          #close{transition:all 0.5s ease; display: none;}
+          #window-cont{width: 300px;}
+        #window button {
+              border-radius: 20px;
+              background-color: #00000060;
+              color: #FFFFFFCC;
+              font-weight: bold;
+              transition: all 0.3s ease;
+              padding: 8px 16px;
+              border: none;
+              height: 46px;
+              width: 200px;
+              font-size: 16px;
+              cursor: pointer;
+              opacity: 0;
+              animation: showB 0.5s ease-in-out;
+          }
+
+          @keyframes showB{
+            0%{opacity: 0;}
+            100%{opacity: 1;}
+          }
+        #window button:hover {
+              background-color: #00000030;
+              transform: translateY(-2px) scale(1.02);
+          }
+
+        #window button:active {
+              transform: scale(0.95);
+          }
 
         .highlight{font-weight: bold;}
+        #decrypt-container {
+            position: absolute;
+            bottom: 100px;
+            padding: 8px 15px;
+            width: 250px;
+            border-radius: 20px;
+            box-shadow: 2px 2px 5px #00000030;
+            display: flex;
+            align-items: center;
+        }
+
+
+        #decrypt-container button {
+            border-radius: 20px;
+            background-color: #333;
+            color: white;
+            padding: 8px 8px;
+            border: none;
+            height: 46px;
+            width: 150px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        #decrypt-container button:hover {
+            background-color: #555;
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        #decrypt-container button:active {
+            transform: scale(0.95);
+        }
+        
     </style>
 </head>
 
-<body>
-    <div id="information">
-        <table>
-            <thead>
-                <tr>
-                    <th>번호</th>
-                    <th>학번</th>
-                    <th>이름</th>
-                    <th>상태</th>
-                    <th>작업</th>
-                </tr>
-            </thead>
-            <tbody id="info-body"></tbody>
-        </table>
-    </div>
-    <div class="input-container">
-        <input type="number" placeholder="학번 입력">
-        <input type="text" placeholder="이름 입력">
-        <span style="width: 20px;"></span>
-        <button onclick="infor()">올리기</button>
-    </div>
+    <body>
+        <div id="information">
+            <table>
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>학번</th>
+                        <th>이름</th>
+                        <th>상태</th>
+                        <th>작업</th>
+                    </tr>
+                </thead>
+                <tbody id="info-body"></tbody>
+            </table>
+        </div>
+        <div class="input-container">
+            <input type="number" placeholder="학번 입력">
+            <input type="text" placeholder="이름 입력">
+            <span style="width: 20px;"></span>
+            <button onclick="infor()">등록</button>
+            <span style="font-weight: bold; margin: 10px; font-size: 20px;">|</span>
+            <input type="text" id="code" placeholder="코드 입력">
+            <button onclick="decrypt()">해독</button>
+                
+        </div>
 
-    <script>
-
-        function HTML(name) {
-            return document.querySelector(name);
-        }
-
-        async function textEffect(name, content, speed) {
-            for (let textNum = 0; textNum < content.length; textNum++) {
-                HTML(name).innerHTML = HTML(name).innerHTML.replace('●', '') + content[textNum] + '●';
-                if (content[textNum] !== ' ') {await new Promise(resolve => setTimeout(resolve, speed));}
+        <script>
+            function HTML(name) {
+                return document.querySelector(name);
             }
-            HTML(name).innerHTML = HTML(name).innerHTML.replace('●', '');
-        }
 
-        let info = [];
+            async function textEffect(name, content, speed) {
+                  const element = HTML(name); // 해당 이름의 요소를 선택
+                  if (!element) {
+                      console.error(`요소 ${name}을 찾을 수 없습니다.`);
+                      return;
+                  }
 
-        function infor() {
-            var name = document.querySelector('input[type="text"]').value.trim();
-            var number = document.querySelector('input[type="number"]').value.trim();
-            var status = '미수령';
-            var infoBody = document.querySelector('#info-body');
+                  let processedContent = '';
+                  let index = 0;
 
-            if (name !== '' && number !== '') {
-                const index = info.findIndex(item => item[0] === number || item[1] === name);
-                if (index !== -1) {
-                    windowAlert(`
-                    ${name} (${number}) 라는 정보는 ${index + 1} 번째 항목에 이미 등록되어 있습니다.
-                    다시 한번 확인하여 주시기 바랍니다.
-                    `);
+                  while (index < content.length) {
+                      const char = content[index];
+
+                      // HTML 태그를 감지하여 처리
+                      if (char === '<') {
+                          processedContent += char;
+                          index++; // '<' 이후에 계속 태그를 처리
+                          while (content[index] !== '>' && index < content.length) {
+                              processedContent += content[index];
+                              index++;
+                          }
+                          processedContent += '>';
+                      } else {
+                          processedContent += char;
+                      }
+
+                      // 텍스트를 타이핑하는 효과를 적용
+                      element.innerHTML = processedContent + '●'; // '●' 추가
+                      if (content[index] !== ' ') {
+                          await new Promise(resolve => setTimeout(resolve, speed));
+                      }
+
+                      index++; // 인덱스 증가
+                  }
+
+                  // 마지막 '●' 제거
+                  element.innerHTML = processedContent;
+              }
+
+            let info = [];
+
+            function infor() {
+                var name = document.querySelector('input[type="text"]').value.trim();
+                var number = document.querySelector('input[type="number"]').value.trim();
+                var status = '미수령';
+                var infoBody = document.querySelector('#info-body');
+
+                if (name !== '' && number !== '') {
+                    const index = info.findIndex(item => item[0] === number || item[1] === name);
+                    if (index !== -1) {
+                        windowAlert('경고',`
+                        <span class = "highlight">${name} (${number})</span> 라는 정보는 <span class = "highlight">${index + 1}</span> 번째 항목에 이미 등록되어 있습니다.
+                        다시 한번 확인하여 주시기 바랍니다.
+                        `,'닫기','close');
+                    } else {
+                        info.push([number, name, status]);
+                        const itemIndex = info.length;
+                        infoBody.innerHTML += `
+                            <tr>
+                                <td id="${itemIndex}-index">${itemIndex}</td>
+                                <td id="${itemIndex}-number">${number}</td>
+                                <td id="${itemIndex}-name">${name}</td>
+                                <td class="pending">${status}</td>
+                                <td class="action-buttons">
+                                    <button class="low" onclick="removeInfo(${itemIndex - 1})">삭제</button>
+                                    <button onclick="updateStatus(${itemIndex - 1})">완료</button>
+                                </td>
+                            </tr>
+                        `;
+                        textEffect(`#${itemIndex}-number`, number, 50);
+                        textEffect(`#${itemIndex}-name`, name, 50);
+                    }
                 } else {
-                    info.push([number, name, status]);
-                    const itemIndex = info.length;
+                    windowAlert('경고',"필요한 정보가 모두 입력되지 않았습니다. 전체 정보를 올바르게 입력하세요.",'닫기','close');
+                }
+            }
+
+            function removeInfo(index) {
+                info.splice(index, 1);
+                updateInformation();
+            }
+
+            function updateStatus(index) {
+                info[index][2] = '수령';
+                updateInformation();
+            }
+
+            function updateInformation() {
+                const infoBody = document.querySelector('#info-body');
+                infoBody.innerHTML = '';
+                info.forEach((item, index) => {
+                    const statusClass = item[2] === '미수령' ? 'pending' : '';
                     infoBody.innerHTML += `
                         <tr>
-                            <td id="${itemIndex}-index">${itemIndex}</td>
-                            <td id="${itemIndex}-number">${number}</td>
-                            <td id="${itemIndex}-name">${name}</td>
-                            <td class="pending">${status}</td>
+                            <td id="${index + 1}-index">${index + 1}</td>
+                            <td id="${index + 1}-number">${item[0]}</td>
+                            <td id="${index + 1}-name">${item[1]}</td>
+                            <td class="${statusClass}">${item[2]}</td>
                             <td class="action-buttons">
-                                <button class="low" onclick="removeInfo(${itemIndex - 1})">삭제</button>
-                                <button onclick="updateStatus(${itemIndex - 1})">완료</button>
+                                <button class="low" onclick="removeInfo(${index})">삭제</button>
+                                <button onclick="updateStatus(${index})">완료</button>
                             </td>
                         </tr>
                     `;
-                    textEffect(`#${itemIndex}-number`, number, 50);
-                    textEffect(`#${itemIndex}-name`, name, 50);
-                }
-            } else {
-                windowAlert("필요한 정보가 모두 입력되지 않았습니다. 전체 정보를 올바르게 입력하세요.");
+                    textEffect(`#${index + 1}-number`, item[0], 50);
+                    textEffect(`#${index + 1}-name`, item[1], 50);
+                });
             }
-        }
 
-        function removeInfo(index) {
-            info.splice(index, 1);
-            updateInformation();
-        }
+            async function windowAlert(title,content,act,work) {
+                  HTML('body').innerHTML +=
+                      `
+                      <div class = "window-holder">
+                      <div id = "window">
+                      <center>
+                      <div style = "font-size:20px;font-weight:bold">${title}</div>
+                      <div style = "margin:20px;"><hr style="width: 60%; height: 2px; background-color: #FFFFFF50; border: none;">
+                      </div>
+                      <p id = "window-cont"></p>
+                      <div style = "height:20px;"></div>
+                      <button onclick=${(work=='close')?"HTML('.window-holder').remove();":work} id="close">${act}</button>
+                      </center>
+                      </div>
+                      </div>
+                      `
+                  await textEffect('#window-cont', content, 45);
+                  HTML('#close').style.opacity = 0;
+                  HTML('#close').style.display = 'block';
+                  await new Promise(resolve => setTimeout(resolve, 10))
+                  HTML('#close').style.opacity = 1;
 
-        function updateStatus(index) {
-            info[index][2] = '수령';
-            updateInformation();
-        }
+              }
 
-        function updateInformation() {
-            const infoBody = document.querySelector('#info-body');
-            infoBody.innerHTML = '';
-            info.forEach((item, index) => {
-                const statusClass = item[2] === '미수령' ? 'pending' : '';
-                infoBody.innerHTML += `
-                    <tr>
-                        <td id="${index + 1}-index">${index + 1}</td>
-                        <td id="${index + 1}-number">${item[0]}</td>
-                        <td id="${index + 1}-name">${item[1]}</td>
-                        <td class="${statusClass}">${item[2]}</td>
-                        <td class="action-buttons">
-                            <button class="low" onclick="removeInfo(${index})">삭제</button>
-                            <button onclick="updateStatus(${index})">완료</button>
-                        </td>
-                    </tr>
-                `;
-                textEffect(`#${index + 1}-number`, item[0], 50);
-                textEffect(`#${index + 1}-name`, item[1], 50);
-            });
-        }
 
-        async function windowAlert(content) {
-            HTML('body').innerHTML +=
-                `
-                <div class = "window-holder">
-                <div id = "window">
-                <center>
-                <div style = "font-size:18px;font-weight:bold">경고</div>
-                <div style = "height:20px;"></div>
-                <div id = "window-cont"></div>
-                <div style = "height:20px;"></div>
-                <button onclick="HTML('.window-holder').remove();" id="close">확인</button>
-                </center>
+            function decrypt() {
+                let encryptedText = HTML('#code').value.trim();
+                encryptedText=encryptedText.replace('1','점수 : ').replace('2','<div></div>시간 : ').replace('Z','<span class ="highlight">게임 : 피하기</span><div></div>').replace('Y','<span class ="highlight">게임 : 도박</span><div></div>')
+                const map = { 'A': '1', 'B': '2', 'C': '3', 'D': '4', 'E': '5', 'F': '6', 'G': '7', 'H': '8', 'I': '9', 'J': '0' };
+                if (encryptedText === '') {
+                    windowAlert('경고','코드를 입력하세요!','닫기','close');
+                    return;
+                }
+
+                let decryptedText = encryptedText.replace(/[A-J]/g, match => map[match] || match).replace('N','일 ').replace('M','시 ').replace('O','분 ');
+                windowAlert('결과',`요청하신 코드의 의미는 다음과 같습니다. 
+                <div style = "margin:20px;"><hr style="width: 30%; height: 2px; background-color: #FFFFFF50; border: none;">
                 </div>
+                <div></div> ▶해독된 값◀
+                <div style = "margin:10px;"></div> 
+                <span class ="highlight">
+                ${decryptedText}
+                <span>
+                <div style = "margin:20px;"><hr style="width: 30%; height: 2px; background-color: #FFFFFF50; border: none;">
                 </div>
-                `
-            await textEffect('#window-cont', content, 30);
-            HTML('#close').style.opacity = 0;
-            HTML('#close').style.display = 'block';
-            await new Promise(resolve => setTimeout(resolve, 10))
-            HTML('#close').style.opacity = 1;
+                <div style = "font-size:12px">(결과가 비정상적이라면, 이 코드는 잘못된 코드입니다.)</div>`,'닫기','close');
+            }
+        </script>
+    
 
-        }
-    </script>
-</body>
-
-</html>
+</body></html>
