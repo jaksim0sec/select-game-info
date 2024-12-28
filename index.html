@@ -437,7 +437,7 @@
 
             function decrypt() {
                 let encryptedText = HTML('#code').value.trim();
-                encryptedText=encryptedText.replace('1','점수 : ').replace('2','<div></div>시간 : ').replace('Z','<span class ="highlight">게임 : 피하기</span><div></div>').replace('Y','<span class ="highlight">게임 : 도박</span><div></div>')
+                encryptedText=encryptedText.replace('1','점수 : ').replace('2','<div></div>시간 : ').replace('Z','<span class ="highlight">게임 : 피하기</span><div></div>').replace('고','<span class ="highlight">게임 : 눈싸움</span><div></div>').replace('Y','<span class ="highlight">게임 : 도박</span><div></div>')
                 const map = { 'A': '1', 'B': '2', 'C': '3', 'D': '4', 'E': '5', 'F': '6', 'G': '7', 'H': '8', 'I': '9', 'J': '0' };
                 if (encryptedText === '') {
                     windowAlert('경고','코드를 입력하세요!','닫기','close');
